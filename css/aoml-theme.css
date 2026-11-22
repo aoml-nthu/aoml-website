@@ -392,6 +392,17 @@ p.person img{
   justify-content:space-between;gap:4px;
 }
 
+/* Desktop: two cards per row; section heading and lone cards (Group Leader) span both */
+@media (min-width:900px){
+  .column1-unit:has(> .main-subcontent > p.person){
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;
+  }
+  .column1-unit:has(> .main-subcontent > p.person) > :not(.main-subcontent),
+  .column1-unit:has(> .main-subcontent > p.person) > .main-subcontent:only-of-type{grid-column:1 / -1}
+  .column1-unit:has(> .main-subcontent > p.person) > .main-subcontent{margin:0}
+  .column1-unit:has(> .main-subcontent > p.person) > h1.block{margin-bottom:6px}
+}
+
 /* ---------- HOMEPAGE INTRO ------------------------------- */
 .main-content_4{
   display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
