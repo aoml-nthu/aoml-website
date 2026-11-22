@@ -369,8 +369,28 @@ p.person img{
   border:1px solid var(--hair);
   box-shadow:var(--sh-photo);
 }
-.main-subcontent:has(p.person){overflow:hidden}
-.main-subcontent:has(p.person) br{line-height:0}
+/* Compact card: photo on the left, name / bio / email stacked on the right.
+   The legacy markup pads with runs of <br> and a trailing <hr>; neutralise them. */
+.main-subcontent:has(> p.person){
+  display:grid;grid-template-columns:120px minmax(0,1fr);
+  grid-template-rows:auto 1fr;column-gap:24px;
+}
+/* row 1: name; row 2: bio/email, pinned to the photo's bottom edge */
+.main-subcontent:has(> p.person) > *,
+.main-subcontent > p.person > b{grid-column:2;grid-row:2;align-self:end;margin-bottom:0}
+.main-subcontent:has(> p.person) > a{grid-row:1;align-self:start}
+.main-subcontent:has(> p.person) > p.person{display:contents}
+.main-subcontent > p.person > img{grid-column:1;grid-row:1 / span 2}
+.main-subcontent:has(> p.person) > br,
+.main-subcontent:has(> p.person) > hr.clear-contentunit,
+.main-subcontent > p.person > br,
+.main-subcontent:has(> p.person) p br{display:none}
+/* bio paragraph (e.g. "Currently working at…" + email): text right under the
+   name, email pushed to the photo's bottom edge */
+.main-subcontent:has(> p.person) > p:not(.person){
+  align-self:stretch;display:flex;flex-direction:column;
+  justify-content:space-between;gap:4px;
+}
 
 /* ---------- HOMEPAGE INTRO ------------------------------- */
 .main-content_4{
@@ -435,6 +455,9 @@ p.person img{
 }
 @media (max-width:560px){
   p.person{float:none;margin:0 0 14px}
+  .main-subcontent:has(> p.person){grid-template-columns:90px minmax(0,1fr);column-gap:16px;padding:18px}
+  .main-subcontent > p.person > img{width:90px;height:120px}
+  .main-subcontent:has(> p.person) > p:not(.person){grid-column:1 / -1;grid-row:3;margin-top:14px}
   .main{padding:0 18px 60px}
 }
 
