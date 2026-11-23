@@ -437,6 +437,21 @@ p.person img{
 .main-content a img{transition:transform .22s ease,box-shadow .22s ease}
 .main-content a img:hover{transform:translateY(-2px);box-shadow:var(--sh-img-hover)}
 
+/* Publication: every TOC graphic / journal cover at one fixed height.
+   Cover entries float the TOC left, so the cover sits to its right. */
+.page-publication .main-content th[width] img{
+  height:var(--pub-img-h,234px);width:auto;max-width:100%;
+  object-fit:contain;vertical-align:top;margin:10px 0 0;
+}
+.page-publication .main-content th[width] div[style*="float"]{margin-right:12px}
+/* Link column: entries with a cover have two icons; stack them left-aligned
+   (the legacy markup centres the second one with <div align="center">). */
+.page-publication .main-content th:not([width]) div[align]{text-align:left}
+.page-publication .main-content th:not([width]) a img{display:block;margin:0 0 12px}
+@media (max-width:560px){
+  .page-publication{--pub-img-h:182px}
+}
+
 /* ---------- TABLES --------------------------------------- */
 .main-content table{width:100%;border-collapse:collapse;margin:0 0 24px;font-size:15px}
 .main-content th{
